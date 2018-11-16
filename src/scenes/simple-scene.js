@@ -1,5 +1,6 @@
 let player;
 let cursors;
+let jumpButton;
 
 export class  SimpleScene extends Phaser.Scene {
   preload() {
@@ -10,8 +11,6 @@ export class  SimpleScene extends Phaser.Scene {
     // Create the player.
     player = this.physics.add.sprite(100, 200, "cokecan");
     player.setCollideWorldBounds(true);
-
-    console.log(this.physics);
 
     // Create cursors.
     cursors = this.input.keyboard.createCursorKeys();
@@ -26,6 +25,11 @@ export class  SimpleScene extends Phaser.Scene {
     }
     else {
       player.setVelocityX(0);
+    }
+
+    // Handle dem jumps.
+    if (cursors.up.isDown && player.body.onFloor()) {
+      player.setVelocityY(-400);
     }
   };
 }
