@@ -28,7 +28,7 @@ export class  SimpleScene extends Phaser.Scene {
     }
 
     // Handle dem jumps.
-    if (cursors.up.isDown && player.body.onFloor()) {
+    if (cursors.space.isDown && player.body.onFloor()) {
       player.setVelocityY(-400);
     }
   };
