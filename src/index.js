@@ -4,7 +4,7 @@ import { SimpleScene } from "./scenes/simple-scene";
 
 const gameConfig = {
   type: Phaser.AUTO,
-  width: 680,
+  width: 720,
   height: 400,
   scene: SimpleScene,
   physics: {

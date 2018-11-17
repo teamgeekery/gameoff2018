@@ -1,17 +1,31 @@
 let player;
 let cursors;
-let jumpButton;
+let ground;
 
-export class  SimpleScene extends Phaser.Scene {
+let jumpSkill = 0;
+
+export class SimpleScene extends Phaser.Scene {
   preload() {
+    this.load.image("sky", "assets/img/sky.png");
+    this.load.image("ground", "assets/img/ground.png");
     this.load.image("chicken", "assets/img/chicken.png");
     this.load.audio("jump", "assets/audio/jump.wav");
   }
 
   create() {
+    // Add the sky.
+    this.add.image(0, 0, "sky").setOrigin(0, 0);
+
+    // Set up the ground.
+    ground = this.physics.add.staticGroup();
+    ground.create(360, 384, "ground");
+
     // Create the player.
-    player = this.physics.add.sprite(100, 400, "chicken");
+    player = this.physics.add.sprite(100, 370, "chicken");
     player.setCollideWorldBounds(true);
+
+    // Set the collider.
+    this.physics.add.collider(player, ground);
 
     // Create cursors.
     cursors = this.input.keyboard.createCursorKeys();
@@ -19,10 +33,10 @@ export class  SimpleScene extends Phaser.Scene {
 
   update() {
     if (cursors.right.isDown) {
-      player.setVelocityX(160);
+      player.setVelocityX(150);
     }
     else if (cursors.left.isDown) {
-      player.setVelocityX(-160);
+      player.setVelocityX(-150);
     }
     else {
       player.setVelocityX(0);
@@ -30,8 +44,14 @@ export class  SimpleScene extends Phaser.Scene {
 
     // Handle dem jumps.
     if (cursors.space.isDown && player.body.onFloor()) {
+      // Play our sweet jump sound.
       this.sound.play("jump");
-      player.setVelocityY(-200);
+
+      // Throw the chicken into the air!
+      player.setVelocityY(-200 - jumpSkill);
+
+      // Increase the players jump skill.
+      jumpSkill++;
     }
   };
 }
