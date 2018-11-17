@@ -4,12 +4,13 @@ let jumpButton;
 
 export class  SimpleScene extends Phaser.Scene {
   preload() {
-    this.load.image("cokecan", "assets/cokecan.png");
+    this.load.image("chicken", "assets/img/chicken.png");
+    this.load.audio("jump", "assets/audio/jump.wav");
   }
 
   create() {
     // Create the player.
-    player = this.physics.add.sprite(100, 200, "cokecan");
+    player = this.physics.add.sprite(100, 400, "chicken");
     player.setCollideWorldBounds(true);
 
     // Create cursors.
@@ -29,7 +30,8 @@ export class  SimpleScene extends Phaser.Scene {
 
     // Handle dem jumps.
     if (cursors.space.isDown && player.body.onFloor()) {
-      player.setVelocityY(-400);
+      this.sound.play("jump");
+      player.setVelocityY(-200);
     }
   };
 }
