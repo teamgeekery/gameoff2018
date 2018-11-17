@@ -34,9 +34,11 @@ export class SimpleScene extends Phaser.Scene {
   update() {
     if (cursors.right.isDown) {
       player.setVelocityX(150);
+      player.flipX = false;
     }
     else if (cursors.left.isDown) {
       player.setVelocityX(-150);
+      player.flipX = true;
     }
     else {
       player.setVelocityX(0);
