@@ -19,7 +19,7 @@ export class SimplerScene extends Phaser.Scene {
     ground.create(360, 384, "ground");
 
     // Create the player.
-    player = this.physics.add.sprite(100, 370, "chicken");
+    player = this.physics.add.sprite(100, 348, "chicken");
     player.setCollideWorldBounds(true);
 
     // Set the collider.
