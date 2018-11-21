@@ -5,6 +5,11 @@ let ground;
 let jumpSkill = 0;
 
 export class SimpleScene extends Phaser.Scene {
+
+  constructor() {
+    super('SimpleScene');
+  }
+
   preload() {
     this.load.image("sky", "assets/img/sky.png");
     this.load.image("ground", "assets/img/ground.png");
@@ -23,12 +28,20 @@ export class SimpleScene extends Phaser.Scene {
     // Create the player.
     player = this.physics.add.sprite(100, 348, "chicken");
     player.setCollideWorldBounds(true);
+    // Listen to world bound events.
+    player.body.onWorldBounds = true;
 
     // Set the collider.
     this.physics.add.collider(player, ground);
 
     // Create cursors.
     cursors = this.input.keyboard.createCursorKeys();
+
+    // Switch to the next scene when we hit the world bound.
+    this.physics.world.setBoundsCollision(true, true, true, true);
+    this.physics.world.on("worldbounds", function (body) {
+      this.scene.start('SimplerScene');
+    }, this);
 
     // Player animations.
     this.anims.create({
@@ -38,7 +51,6 @@ export class SimpleScene extends Phaser.Scene {
       repeat: -1,
       showOnStart: true
     });
-
   }
 
   update() {
